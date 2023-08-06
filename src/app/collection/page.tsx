@@ -1,6 +1,6 @@
 import Collection from "./components/Collection/Collection";
 import Header from "./components/Header/Header";
-import SearchBar from "./components/Header/SearchBar/SearchBar";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 export default function Home() {
   return (
