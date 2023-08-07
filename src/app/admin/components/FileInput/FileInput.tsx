@@ -6,19 +6,23 @@ import { useDropzone } from "react-dropzone";
 
 interface FileInputProps {
   onDrop: (file: File) => void;
-  name: string;
   progress?: number;
 }
 
-export default function FileInput({ name, onDrop, progress }: FileInputProps) {
-  const [field, meta, helpers] = useField({ name });
+export default function FileInput({ onDrop, progress }: FileInputProps) {
+  const [fileNameField, fileNameMeta, fileNameHelpers] = useField({
+    name: "fileName",
+  });
+  const [fileKeyField, fileKeyMeta, fileKeyHelpers] = useField({
+    name: "fileKey",
+  });
 
   const onDropCallback = useCallback((acceptedFiles: File[]) => {
     console.log({ acceptedFiles });
     const file = acceptedFiles[0];
     if (file) {
       onDrop(file);
-      helpers.setValue(file.name);
+      fileNameHelpers.setValue(file.name);
     }
   }, []);
 
@@ -41,15 +45,15 @@ export default function FileInput({ name, onDrop, progress }: FileInputProps) {
     >
       <input {...getInputProps()} />
       <p className="text-white">
-        {field.value
-          ? field.value
+        {fileNameField.value
+          ? fileNameField.value
           : "Drag 'n' drop some files here, or click to select files"}
       </p>
       {typeof progress !== "undefined" ? (
         <p className="text-white">{getProgress()}</p>
       ) : null}
-      {meta.touched && meta.error ? (
-        <div className="text-red-500 text-xs italic">{meta.error}</div>
+      {fileKeyMeta.touched && fileKeyMeta.error ? (
+        <div className="text-red-500 text-xs italic">{fileKeyMeta.error}</div>
       ) : null}
     </div>
   );

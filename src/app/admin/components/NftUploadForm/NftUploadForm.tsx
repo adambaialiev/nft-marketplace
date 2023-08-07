@@ -11,7 +11,8 @@ import { useState } from "react";
 interface FormValues {
   name: string;
   tag: string;
-  filename: string;
+  fileName: string;
+  fileKey: string;
 }
 
 const Schema = Yup.object().shape({
@@ -23,7 +24,7 @@ const Schema = Yup.object().shape({
     .min(2, "Too Short")
     .max(50, "Too Long")
     .required("Required"),
-  filename: Yup.string().required("Required"),
+  fileKey: Yup.string().required("Required"),
 });
 
 export interface UploadUrlResponse {
@@ -35,53 +36,73 @@ export const getExtensionFromFilename = (fileName: string) =>
   fileName.split(".").pop();
 
 export default function NftUploadForm() {
-  const initialValues: FormValues = { name: "", tag: "", filename: "" };
+  const initialValues: FormValues = {
+    name: "",
+    tag: "",
+    fileName: "",
+    fileKey: "",
+  };
 
   const [progress, setProgress] = useState<number | undefined>();
 
-  const onDrop = async (file: File) => {
-    try {
-      const { name, type } = file;
-      const extension = getExtensionFromFilename(name);
-      console.log({ extension });
-      const { uploadUrl, key } = await axiosInstance
-        .post<any, AxiosResponse<UploadUrlResponse>>(Endpoints.GetUploadUrl, {
-          extension,
-          contentType: type,
-        })
-        .then((res) => res.data);
+  const onDrop =
+    (setFileKeyValue: (key: string) => void) => async (file: File) => {
+      try {
+        const { name, type } = file;
+        const extension = getExtensionFromFilename(name);
+        console.log({ extension });
 
-      console.log({ uploadUrl, key });
+        const { uploadUrl, key } = await axiosInstance
+          .post<any, AxiosResponse<UploadUrlResponse>>(Endpoints.GetUploadUrl, {
+            extension,
+            contentType: type,
+          })
+          .then((res) => res.data);
 
-      await axios.put(uploadUrl, new File([file], key, { type: file.type }), {
-        headers: {
-          "Content-Type": type,
-          "Content-Disposition": `attachment; filename="${key}"`,
-        },
-        onUploadProgress: (progressEvent) => {
-          console.log({ progressEvent });
-          setProgress(progressEvent.progress);
-        },
-      });
-    } catch (error) {
-      console.log({ error });
-    }
-  };
+        console.log({ uploadUrl, key });
+
+        await axios.put(uploadUrl, new File([file], key, { type: file.type }), {
+          headers: {
+            "Content-Type": type,
+            "Content-Disposition": `attachment; filename="${key}"`,
+          },
+          onUploadProgress: (progressEvent) => {
+            console.log({ progressEvent });
+            setProgress(progressEvent.progress);
+          },
+        });
+        setFileKeyValue(key);
+      } catch (error) {
+        console.log({ error });
+      }
+    };
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={Schema}
-      onSubmit={async (values) => {
-        console.log({ values });
+      onSubmit={async ({ name, tag, fileKey }) => {
+        try {
+          const response = await axiosInstance.post(Endpoints.NFT, {
+            name,
+            tag,
+            fileKey,
+          });
+          console.log({ submitResponse: response });
+        } catch (error) {
+          console.log({ error });
+        }
       }}
     >
-      {({ isSubmitting, isValid }) => {
+      {({ isSubmitting, isValid, setFieldValue }) => {
         const isCreateDisabled = isSubmitting || !isValid || progress !== 1;
+        const setFileKeyValue = (value: string) =>
+          setFieldValue("fileKey", value);
+
         return (
           <Form>
             <Input name="name" label="Name" placeholder="Enter name" />
             <Input name="tag" label="Tag" placeholder="Enter tag" />
-            <FileInput onDrop={onDrop} name="filename" progress={progress} />
+            <FileInput onDrop={onDrop(setFileKeyValue)} progress={progress} />
             <button
               className={`text-orange py-2 px-4 ${
                 isCreateDisabled ? "opacity-60" : ""
