@@ -1,6 +1,8 @@
 "use client";
 import useCardSizeStore from "@/app/_store/useCardSizeStore";
 import { CardSize } from "@/app/types";
+import ArrowDownIcon from "./arrow-down.svg";
+import Image from "next/image";
 
 interface SizeSelectorItemProps {
   isSelected: boolean;
@@ -14,10 +16,16 @@ function SizeSelectorItem({
   onClick,
 }: SizeSelectorItemProps) {
   return (
-    <div className="flex flex-col items-center">
-      {/* {isSelected && <Image src={ArrowDownIcon} alt="arrow down icon" />} */}
+    <div className="flex flex-col items-center relative">
+      {isSelected && (
+        <Image
+          src={ArrowDownIcon}
+          alt="arrow down icon"
+          className="absolute top-[-5px]"
+        />
+      )}
       <button
-        className={`text-xl p-2.5 border border-black1 ${
+        className={`text-xl px-[12px] py-[5px] border border-black1 ${
           isSelected ? "bg-white" : "text-white"
         }`}
         onClick={onClick}
