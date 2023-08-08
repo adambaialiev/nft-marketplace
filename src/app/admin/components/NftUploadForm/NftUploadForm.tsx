@@ -94,12 +94,12 @@ export default function NftUploadForm() {
           setFieldValue("fileKey", value);
 
         return (
-          <Form>
+          <Form className="w-full sm:w-full md:w-96 flex flex-col">
             <Input name="name" label="Name" placeholder="Enter name" />
             <Input name="tag" label="Tag" placeholder="Enter tag" />
             <FileInput onDrop={onDrop(setFileKeyValue)} progress={progress} />
             <button
-              className={`text-orange py-2 px-4 ${
+              className={`text-orange mt-2.5 self-center py-2 px-4 ${
                 isCreateDisabled ? "opacity-60" : ""
               }`}
               type="submit"
