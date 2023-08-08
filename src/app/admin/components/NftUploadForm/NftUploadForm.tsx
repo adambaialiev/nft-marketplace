@@ -76,13 +76,16 @@ export default function NftUploadForm() {
     <Formik
       initialValues={initialValues}
       validationSchema={Schema}
-      onSubmit={async ({ name, tag, fileKey }) => {
+      onSubmit={async ({ name, tag, fileKey }, { resetForm }) => {
         try {
           await axiosInstance.post(Endpoints.NFT, {
             name,
             tag,
             fileKey,
           });
+          resetForm();
+          setProgress(undefined);
+          alert("NFT was uploaded successfully");
         } catch (error) {
           console.log({ error });
         }
@@ -94,7 +97,7 @@ export default function NftUploadForm() {
           setFieldValue("fileKey", value);
 
         return (
-          <Form className="w-full sm:w-full md:w-96 flex flex-col">
+          <Form className="w-full sm:w-full md:w-96 flex flex-col mt-3.5">
             <Input name="name" label="Name" placeholder="Enter name" />
             <Input name="tag" label="Tag" placeholder="Enter tag" />
             <FileInput onDrop={onDrop(setFileKeyValue)} progress={progress} />

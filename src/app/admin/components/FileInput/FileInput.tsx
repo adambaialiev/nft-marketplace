@@ -40,7 +40,7 @@ export default function FileInput({ onDrop, progress }: FileInputProps) {
   return (
     <div
       {...getRootProps()}
-      className=" p-2.5 border-dashed border-white border-2"
+      className=" p-2.5 border-dashed border-white border-2 cursor-pointer"
     >
       <input {...getInputProps()} />
       <p className="text-white">
