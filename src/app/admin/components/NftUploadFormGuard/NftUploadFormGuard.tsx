@@ -5,12 +5,11 @@ import NftUploadForm from "../NftUploadForm/NftUploadForm";
 
 export default function NftUploadFormGuard() {
   const ethAddress = useAuthStore((state) => state.address);
-  return ethAddress ? <NftUploadForm /> : <NftUploadForm />;
-  // return ethAddress ? (
-  //   <NftUploadForm />
-  // ) : (
-  //   <div className="p-10">
-  //     <span className="text-white">Please sign in to upload NFTs</span>
-  //   </div>
-  // );
+  return ethAddress ? (
+    <NftUploadForm />
+  ) : (
+    <div className="p-10">
+      <span className="text-white">Please sign in to upload NFTs</span>
+    </div>
+  );
 }

@@ -7,9 +7,14 @@ import { useDropzone } from "react-dropzone";
 interface FileInputProps {
   onDrop: (file: File) => void;
   progress?: number;
+  uploadHasStarted: boolean;
 }
 
-export default function FileInput({ onDrop, progress }: FileInputProps) {
+export default function FileInput({
+  onDrop,
+  progress,
+  uploadHasStarted,
+}: FileInputProps) {
   const [fileNameField, , fileNameHelpers] = useField({
     name: "fileName",
   });
@@ -48,8 +53,13 @@ export default function FileInput({ onDrop, progress }: FileInputProps) {
           ? fileNameField.value
           : "Drag 'n' drop some files here, or click to select files"}
       </p>
+      {typeof progress === "undefined" && uploadHasStarted ? (
+        <p className="text-white">File upload has started...</p>
+      ) : null}
       {typeof progress !== "undefined" ? (
-        <p className="text-white">{getProgress()}</p>
+        <p className="text-white">
+          {progress < 1 ? getProgress() : "Uploaded successfully"}
+        </p>
       ) : null}
       {fileKeyMeta.touched && fileKeyMeta.error ? (
         <div className="text-red-500 text-xs italic">{fileKeyMeta.error}</div>

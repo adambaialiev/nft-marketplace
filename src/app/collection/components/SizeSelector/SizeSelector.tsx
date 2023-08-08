@@ -16,17 +16,17 @@ function SizeSelectorItem({
   onClick,
 }: SizeSelectorItemProps) {
   return (
-    <div className="flex flex-col items-center relative">
+    <div className="flex flex-col items-center justify-center relative">
       {isSelected && (
         <Image
           src={ArrowDownIcon}
           alt="arrow down icon"
-          className="absolute top-[-5px]"
+          className="absolute top-[-7px]"
         />
       )}
       <button
-        className={`text-xl px-[12px] py-[5px] border border-black1 ${
-          isSelected ? "bg-white" : "text-white"
+        className={`text-xl px-[12px] py-[5px] border ${
+          isSelected ? "bg-white border-white" : "text-white border-black1"
         }`}
         onClick={onClick}
       >

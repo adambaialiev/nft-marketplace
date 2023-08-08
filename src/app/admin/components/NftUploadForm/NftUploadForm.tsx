@@ -44,10 +44,12 @@ export default function NftUploadForm() {
   };
 
   const [progress, setProgress] = useState<number | undefined>();
+  const [uploadHasStarted, setUploadHasStarted] = useState(false);
 
   const onDrop =
     (setFileKeyValue: (key: string) => void) => async (file: File) => {
       try {
+        setUploadHasStarted(true);
         const { name, type } = file;
         const extension = getExtensionFromFilename(name);
 
@@ -69,6 +71,8 @@ export default function NftUploadForm() {
         });
         setFileKeyValue(key);
       } catch (error) {
+        setProgress(undefined);
+        setUploadHasStarted(false);
         console.log({ error });
       }
     };
@@ -84,6 +88,7 @@ export default function NftUploadForm() {
             fileKey,
           });
           resetForm();
+          setUploadHasStarted(false);
           setProgress(undefined);
           alert("NFT was uploaded successfully");
         } catch (error) {
@@ -100,7 +105,11 @@ export default function NftUploadForm() {
           <Form className="w-full sm:w-full md:w-96 flex flex-col mt-3.5">
             <Input name="name" label="Name" placeholder="Enter name" />
             <Input name="tag" label="Tag" placeholder="Enter tag" />
-            <FileInput onDrop={onDrop(setFileKeyValue)} progress={progress} />
+            <FileInput
+              onDrop={onDrop(setFileKeyValue)}
+              progress={progress}
+              uploadHasStarted={uploadHasStarted}
+            />
             <button
               className={`text-orange mt-2.5 self-center py-2 px-4 ${
                 isCreateDisabled ? "opacity-60" : ""
@@ -108,7 +117,7 @@ export default function NftUploadForm() {
               type="submit"
               disabled={isCreateDisabled}
             >
-              Create
+              {isSubmitting ? "Loading" : "Create"}
             </button>
           </Form>
         );
