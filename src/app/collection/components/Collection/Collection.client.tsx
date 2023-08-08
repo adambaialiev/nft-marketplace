@@ -16,7 +16,7 @@ const getGridClassesForSize = (size: CardSize) => {
     case "M":
       return "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
     case "S":
-      return "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6";
+      return "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6";
     default:
       throw new Error("Wrong size");
   }
@@ -27,7 +27,7 @@ export default function CollectionClientSide({
 }: CollectionClientSideProps) {
   const cardSize = useCardSizeStore((state) => state.cardSize);
   const searchQuery = useSearchStore((state) => state.searchQuery);
-  console.log({ searchQuery });
+
   const search = (nft: NFTItem) => {
     return (
       nft.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
