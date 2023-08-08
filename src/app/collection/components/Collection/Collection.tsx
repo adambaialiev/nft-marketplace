@@ -1,6 +1,6 @@
 import axiosInstance from "@/api/axiosInstance";
 import { Endpoints } from "@/api/endpoints";
-import NFTCard from "../NFTCard/NFTCard";
+import CollectionClientSide from "./Collection.client";
 
 export interface NFTItem {
   fileUrl: string;
@@ -15,11 +15,5 @@ export default async function Collection() {
     .get<NFTItem[]>(Endpoints.NFT)
     .then((res) => res.data);
 
-  return (
-    <div className="grid grid-cols-4">
-      {collection.map((nft) => (
-        <NFTCard key={nft.id} nft={nft} />
-      ))}
-    </div>
-  );
+  return <CollectionClientSide collection={collection} />;
 }

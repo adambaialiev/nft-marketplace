@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { NFTItem } from "../Collection/Collection";
 import { CardSize } from "@/app/types";
-import useCardSizeStore from "@/app/_store/useCardSizeStore";
 
 interface NFTCardProps {
   nft: NFTItem;
+  cardSize: CardSize;
 }
 
 const getDimensionsForCardSize = (
@@ -33,9 +33,9 @@ const getDimensionsForCardSize = (
   }
 };
 
-export default function NFTCard({ nft }: NFTCardProps) {
+export default function NFTCard({ nft, cardSize }: NFTCardProps) {
   const { name, fileUrl, tag } = nft;
-  const cardSize = useCardSizeStore((state) => state.cardSize);
+
   return (
     <div
       className="relative group"
@@ -48,7 +48,7 @@ export default function NFTCard({ nft }: NFTCardProps) {
         placeholder="blur"
         {...getDimensionsForCardSize(cardSize)}
       />
-      <div className="invisible group-hover:visible absolute top-0 bottom-0 right-0 left-0 flex flex-col items-center justify-between p-[20%] bg-black-transparent">
+      <div className="invisible group-hover:visible absolute top-0 bottom-0 right-0 left-0 flex flex-col items-center justify-between p-[25%] bg-black-transparent">
         <div>
           <div className="bg-orange2 text-orange text-[10px] p-[5px] rounded-[5px] flex items-center justify-center uppercase">
             {tag}
