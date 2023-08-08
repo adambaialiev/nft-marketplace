@@ -7,8 +7,7 @@ interface InputProps {
 }
 
 export default function Input({ name, placeholder, label }: InputProps) {
-  const [field, meta, helpers] = useField({ name, placeholder });
-  console.log({ meta });
+  const [field, meta] = useField({ name, placeholder });
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="text-white">

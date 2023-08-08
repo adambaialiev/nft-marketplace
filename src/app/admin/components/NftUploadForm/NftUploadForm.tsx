@@ -50,7 +50,6 @@ export default function NftUploadForm() {
       try {
         const { name, type } = file;
         const extension = getExtensionFromFilename(name);
-        console.log({ extension });
 
         const { uploadUrl, key } = await axiosInstance
           .post<any, AxiosResponse<UploadUrlResponse>>(Endpoints.GetUploadUrl, {
@@ -59,15 +58,12 @@ export default function NftUploadForm() {
           })
           .then((res) => res.data);
 
-        console.log({ uploadUrl, key });
-
         await axios.put(uploadUrl, new File([file], key, { type: file.type }), {
           headers: {
             "Content-Type": type,
             "Content-Disposition": `attachment; filename="${key}"`,
           },
           onUploadProgress: (progressEvent) => {
-            console.log({ progressEvent });
             setProgress(progressEvent.progress);
           },
         });
@@ -82,12 +78,11 @@ export default function NftUploadForm() {
       validationSchema={Schema}
       onSubmit={async ({ name, tag, fileKey }) => {
         try {
-          const response = await axiosInstance.post(Endpoints.NFT, {
+          await axiosInstance.post(Endpoints.NFT, {
             name,
             tag,
             fileKey,
           });
-          console.log({ submitResponse: response });
         } catch (error) {
           console.log({ error });
         }

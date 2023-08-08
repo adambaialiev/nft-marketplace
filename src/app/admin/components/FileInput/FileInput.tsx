@@ -10,15 +10,14 @@ interface FileInputProps {
 }
 
 export default function FileInput({ onDrop, progress }: FileInputProps) {
-  const [fileNameField, fileNameMeta, fileNameHelpers] = useField({
+  const [fileNameField, , fileNameHelpers] = useField({
     name: "fileName",
   });
-  const [fileKeyField, fileKeyMeta, fileKeyHelpers] = useField({
+  const [, fileKeyMeta] = useField({
     name: "fileKey",
   });
 
   const onDropCallback = useCallback((acceptedFiles: File[]) => {
-    console.log({ acceptedFiles });
     const file = acceptedFiles[0];
     if (file) {
       onDrop(file);
