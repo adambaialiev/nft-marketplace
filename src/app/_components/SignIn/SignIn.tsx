@@ -45,10 +45,10 @@ export default function SignIn() {
     <span className="text-orange">{address}</span>
   ) : (
     <button
-      className="text-orange py-2 px-4 text-3xl font-light"
+      className="text-orange py-2 px-4 text-3xl font-light uppercase"
       onClick={onClick}
     >
-      SIGN IN
+      Sign in
     </button>
   );
 }

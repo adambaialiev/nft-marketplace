@@ -1,14 +1,7 @@
 import axiosInstance from "@/api/axiosInstance";
 import { Endpoints } from "@/api/endpoints";
 import CollectionClientSide from "./Collection.client";
-
-export interface NFTItem {
-  fileUrl: string;
-  createdAt: string;
-  id: string;
-  name: string;
-  tag: string;
-}
+import { NFTItem } from "@/app/types";
 
 export default async function Collection() {
   const collection = await axiosInstance

@@ -1,4 +1,4 @@
-import Header from "../collection/components/Header/Header";
+import Header from "../_components/Header/Header";
 import NftUploadFormGuard from "./components/NftUploadFormGuard/NftUploadFormGuard";
 
 export default function Page() {

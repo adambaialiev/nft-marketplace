@@ -1,5 +1,5 @@
 import Collection from "./components/Collection/Collection";
-import Header from "./components/Header/Header";
+import Header from "../_components/Header/Header";
 import SearchBar from "./components/SearchBar/SearchBar";
 
 export default function Home() {
