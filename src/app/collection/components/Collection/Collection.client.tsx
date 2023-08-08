@@ -3,6 +3,7 @@ import useCardSizeStore from "@/app/_store/useCardSizeStore";
 import NFTCard from "../NFTCard/NFTCard";
 import { NFTItem } from "./Collection";
 import { CardSize } from "@/app/types";
+import useSearchStore from "@/app/_store/useSearchStore";
 
 interface CollectionClientSideProps {
   collection: NFTItem[];
@@ -25,13 +26,21 @@ export default function CollectionClientSide({
   collection,
 }: CollectionClientSideProps) {
   const cardSize = useCardSizeStore((state) => state.cardSize);
+  const searchQuery = useSearchStore((state) => state.searchQuery);
+  console.log({ searchQuery });
+  const search = (nft: NFTItem) => {
+    return (
+      nft.name.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      nft.tag.toLowerCase().startsWith(searchQuery.toLowerCase())
+    );
+  };
   return (
     <div
       className={`p-10 grid justify-items-center gap-y-[69px] ${getGridClassesForSize(
         cardSize
       )}`}
     >
-      {collection.map((nft) => (
+      {collection.filter(search).map((nft) => (
         <NFTCard key={nft.id} nft={nft} cardSize={cardSize} />
       ))}
     </div>

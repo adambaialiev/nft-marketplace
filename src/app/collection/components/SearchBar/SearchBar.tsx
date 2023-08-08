@@ -2,8 +2,10 @@
 import Image from "next/image";
 import SearchIcon from "./search-icon.svg";
 import SizeSelector from "../SizeSelector/SizeSelector";
+import useSearchStore from "@/app/_store/useSearchStore";
 
 export default function SearchBar() {
+  const { searchQuery, setSearchQuery } = useSearchStore();
   return (
     <div className="border-b border-black1 flex py-[30px] px-10 justify-between items-end">
       <div className="flex bg-black2 h-[60px] flex-1 max-w-screen-md px-2.5">
@@ -11,6 +13,8 @@ export default function SearchBar() {
         <input
           className="bg-inherit flex-1 text-white outline-none"
           placeholder="SEARCH"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
       <SizeSelector />
