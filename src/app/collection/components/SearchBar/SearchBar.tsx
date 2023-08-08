@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import SearchIcon from "./search-icon.svg";
-import SizeSelector, { CardSize } from "../SizeSelector/SizeSelector";
+import SizeSelector from "../SizeSelector/SizeSelector";
 
 export default function SearchBar() {
   return (
@@ -13,7 +13,7 @@ export default function SearchBar() {
           placeholder="SEARCH"
         />
       </div>
-      <SizeSelector selectedValue="S" onSizeSelect={() => {}} />
+      <SizeSelector />
     </div>
   );
 }

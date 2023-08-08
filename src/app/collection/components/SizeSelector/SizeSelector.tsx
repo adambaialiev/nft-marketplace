@@ -1,8 +1,6 @@
 "use client";
-import ArrowDownIcon from "./arrow-down.svg";
-import Image from "next/image";
-
-export type CardSize = "S" | "M" | "L";
+import useCardSizeStore from "@/app/_store/useCardSizeStore";
+import { CardSize } from "@/app/types";
 
 interface SizeSelectorItemProps {
   isSelected: boolean;
@@ -30,36 +28,30 @@ function SizeSelectorItem({
   );
 }
 
-interface SizeSelectorProps {
-  selectedValue: CardSize;
-  onSizeSelect: (size: CardSize) => void;
-}
-
-export default function SizeSelector({
-  selectedValue,
-  onSizeSelect,
-}: SizeSelectorProps) {
+export default function SizeSelector() {
+  const selectedCardSize = useCardSizeStore((state) => state.cardSize);
+  const setCardSize = useCardSizeStore((state) => state.setCardSize);
   return (
     <div className="flex">
       <div className="ml-2.5">
         <SizeSelectorItem
-          isSelected={selectedValue === "S"}
+          isSelected={selectedCardSize === "S"}
           value="S"
-          onClick={() => onSizeSelect("S")}
+          onClick={() => setCardSize("S")}
         />
       </div>
       <div className="ml-2.5">
         <SizeSelectorItem
-          isSelected={selectedValue === "M"}
+          isSelected={selectedCardSize === "M"}
           value="M"
-          onClick={() => onSizeSelect("M")}
+          onClick={() => setCardSize("M")}
         />
       </div>
       <div className="ml-2.5">
         <SizeSelectorItem
-          isSelected={selectedValue === "L"}
+          isSelected={selectedCardSize === "L"}
           value="L"
-          onClick={() => onSizeSelect("L")}
+          onClick={() => setCardSize("L")}
         />
       </div>
     </div>
