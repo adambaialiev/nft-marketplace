@@ -1,8 +1,7 @@
 "use client";
 import useCardSizeStore from "@/app/_store/useCardSizeStore";
 import NFTCard from "../NFTCard/NFTCard";
-import { NFTItem } from "./Collection";
-import { CardSize } from "@/app/types";
+import { CardSize, NFTItem } from "@/app/types";
 import useSearchStore from "@/app/_store/useSearchStore";
 
 interface CollectionClientSideProps {

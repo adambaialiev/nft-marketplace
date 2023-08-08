@@ -21,13 +21,16 @@ export default function FileInput({
     name: "fileKey",
   });
 
-  const onDropCallback = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      onDrop(file);
-      fileNameHelpers.setValue(file.name);
-    }
-  }, []);
+  const onDropCallback = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        onDrop(file);
+        fileNameHelpers.setValue(file.name);
+      }
+    },
+    [fileNameHelpers, onDrop]
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: onDropCallback,
