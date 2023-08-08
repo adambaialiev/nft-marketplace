@@ -44,7 +44,10 @@ export default function SignIn() {
   return address ? (
     <span className="text-orange">{address}</span>
   ) : (
-    <button className="text-orange py-2 px-4" onClick={onClick}>
+    <button
+      className="text-orange py-2 px-4 text-3xl font-light"
+      onClick={onClick}
+    >
       SIGN IN
     </button>
   );
